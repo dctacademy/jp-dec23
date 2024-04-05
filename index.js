@@ -9,12 +9,8 @@ configureDB()
 
 app.use(express.json())
 
-// 
-app.post('/users/register',  usersCltr.register)
 
-// app.post('/users/login', checkSchema(userLoginValidationSchema), usersCltr.login)
-// app.get('/users/account', usersCltr.account)
-// app.delete('/users/account', usersCltr.logout)
+app.post('/users/register', checkSchema(userRegisterValidationSchema), usersCltr.register)
 
 app.listen(port, () => {
     console.log('server running on port', port)
