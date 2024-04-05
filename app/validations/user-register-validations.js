@@ -1,15 +1,21 @@
 const User = require('../models/user-model')
 const userRegisterValidationSchema = {
     username: {
+        exists: {
+            errorMessage: 'username is required'            
+        },
         notEmpty: {
-            errorMessage: 'username is required'
+            errorMessage: 'username cannot be empty'
         },
         trim: true 
     },
     email: {
+        exists: {
+            errorMessage: 'email is required'            
+        },
         notEmpty: {
-            errorMessage: 'email is required'
-        }, 
+            errorMessage: 'email cannot be empty'
+        },
         isEmail: {
             errorMessage: 'email should be a valid format'
         }, 
@@ -27,8 +33,11 @@ const userRegisterValidationSchema = {
         normalizeEmail: true 
     },
     password: {
+        exists: {
+            errorMessage: 'password is required'            
+        },
         notEmpty: {
-            errorMessage: 'password is required'
+            errorMessage: 'password cannot be empty'
         },
         isLength: {
             options: {min: 8, max: 128},
@@ -37,8 +46,11 @@ const userRegisterValidationSchema = {
         trim: true 
     },
     role: {
+        exists: {
+            errorMessage: 'role is required'            
+        },
         notEmpty: {
-            errorMessage: 'role is required'
+            errorMessage: 'role cannot be empty'
         },
         isIn: {
             options: [['candidate', 'recruiter']],
