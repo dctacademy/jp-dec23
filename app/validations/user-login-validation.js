@@ -9,7 +9,7 @@ const userLoginValidationSchema = {
         isEmail: {
             errorMessage: 'invalid email format'
         },
-        normaliseEmail: true,
+        normalizeEmail: true,
         trim: true 
     },
     password: {
