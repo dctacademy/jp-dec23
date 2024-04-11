@@ -45,7 +45,7 @@ usersCltr.login = async (req, res) => {
                     role: user.role 
                 }
                 const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '7d'})
-                res.json({ token: token })
+                return res.json({ token: token })
             }
             return res.status(404).json({ error: 'invalid email / password '})
         }

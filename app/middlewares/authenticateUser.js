@@ -6,7 +6,10 @@ const authenticateUser = (req, res, next) => {
     }
     try {
         const tokenData = jwt.verify(token, process.env.JWT_SECRET) 
-        req.user = tokenData
+        req.user = {
+            id: tokenData.id,
+            role: tokenData.role 
+        }
         next()
     } catch(err) {
         return res.status(400).json({ error: err })
