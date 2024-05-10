@@ -13,16 +13,16 @@ const jobSchema = new Schema({
     location: [String],
     jobType: String,
     experience: {
-        min: Number,
-        max: Number 
+        minExp: Number,
+        maxExp: Number 
     },
     skills: [String],
     dueDate: Date, 
     package: {
-        min: Number,
-        max: Number 
+        minSalary: Number,
+        maxSalary: Number 
     }
-})
+}, { timestamps: true })
 
 const Job = model('Job', jobSchema) 
 
