@@ -1,5 +1,3 @@
-const Job = require('../models/job-model')
-
 const jobValidationSchema = {
     title: {
         in: ['body'],
@@ -39,6 +37,14 @@ const jobValidationSchema = {
         trim: true,
         notEmpty: {
             errorMessage: 'location cannot be empty'
+        },
+        custom: {
+            options: function(value) {
+                if(!Array.isArray(value)) {
+                    return new Error('location should be in array')
+                }
+                return true 
+            }
         }
     },
     jobType: {
@@ -119,7 +125,7 @@ const jobValidationSchema = {
             }
         }
     },
-    'package.minSalary': {
+    'salary.minSalary': {
         exists: {
             errorMessage: 'min package is required'
         },
@@ -131,7 +137,7 @@ const jobValidationSchema = {
             errorMessage: 'min salary should be a number'
         }
     },
-    'package.maxSalary': {
+    'salary.maxSalary': {
         exists: {
             errorMessage: 'max package is required'
         },
@@ -143,8 +149,9 @@ const jobValidationSchema = {
             errorMessage: 'should be a number'
         },
         custom: {
-            options: function(value, { req }){
-                if(value < req.body.package.minSalary) {
+            options: function(value, { req } ){
+                console.log(value, req.body)
+                if(Number(value) < Number(req.body.salary.minSalary)) {
                     throw new Error('max salary should be greater than min salary')
                 }
                 return true 

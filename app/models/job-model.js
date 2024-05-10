@@ -18,7 +18,7 @@ const jobSchema = new Schema({
     },
     skills: [String],
     dueDate: Date, 
-    package: {
+    salary: {
         minSalary: Number,
         maxSalary: Number 
     }
