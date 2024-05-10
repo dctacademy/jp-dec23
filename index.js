@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const { checkSchema } = require('express-validator')
 const configureDB = require('./config/db')
 const userRegisterValidationSchema = require('./app/validations/user-register-validations')
@@ -15,6 +16,7 @@ const port = 3333
 configureDB()
 
 app.use(express.json())
+app.use(cors())
 
 // application level middleware - using it for logging request for debug purpose
 app.use(function(req, res, next){
@@ -27,6 +29,7 @@ app.post('/users/register', checkSchema(userRegisterValidationSchema), usersCltr
 app.post('/users/login', checkSchema(userLoginValidationSchema), usersCltr.login)
 // routing level middleware
 app.get('/users/account', authenticateUser, usersCltr.account)
+app.get('/users/checkemail', usersCltr.checkEmail)
 
 app.get('/api/jobs', authenticateUser, jobsCltr.list) 
 app.post('/api/jobs', authenticateUser, authorizeUser(['recruiter']), jobsCltr.create)

@@ -7,7 +7,7 @@
     * role 
 
 ## Candidate
-    * userId
+    * userId - Schema.Types.ObjectId 
     * firstName
     * lastName
     * mobile

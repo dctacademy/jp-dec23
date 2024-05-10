@@ -57,7 +57,6 @@ const userRegisterValidationSchema = {
             errorMessage: 'role should either be a candidate or recruiter'
         }, 
         trim: true 
-        
     }
 }
 
