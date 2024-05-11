@@ -34,4 +34,24 @@ jobsCltr.create = async (req, res) => {
     res.status(201).json(job)
 }
 
+jobsCltr.update = async (req, res) => {
+    const id = req.params.id 
+    const body = req.body 
+
+    const job = await Job.findOneAndUpdate({ recruiter: req.user.id, _id: id }, body, { new: true })
+    if(!job) {
+        return res.status(404).json({ error: 'record not found'})
+    }
+    res.json(job) 
+}
+
+jobsCltr.remove = async (req, res) => {
+    const id = req.params.id 
+    const job = await Job.findOneAndDelete({ recruiter: req.user.id, _id: id })
+    if(!job) {
+        return res.status(404).json({ error: 'record not found'})
+    }
+    res.json(job) 
+}
+
 module.exports = jobsCltr 

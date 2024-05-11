@@ -35,6 +35,8 @@ app.get('/users/checkemail', usersCltr.checkEmail)
 app.get('/api/jobs', jobsCltr.list) 
 app.get('/api/jobs/my', authenticateUser, authorizeUser(['recruiter']), jobsCltr.my)
 app.post('/api/jobs', authenticateUser, authorizeUser(['recruiter']), checkSchema(jobValidationSchema),jobsCltr.create)
+app.delete('/api/jobs/:id', authenticateUser, authorizeUser(['recruiter']), jobsCltr.remove)
+app.put('/api/jobs/:id', authenticateUser, authorizeUser(['recruiter']), checkSchema(jobValidationSchema), jobsCltr.update)
 
 app.post('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']), checkSchema(candidateValidationSchema), candidatesCltr.create)
 app.get('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']), candidatesCltr.show)
