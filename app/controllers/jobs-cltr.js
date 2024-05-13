@@ -21,6 +21,17 @@ jobsCltr.my = async (req, res) => {
     }
 }
 
+jobsCltr.show = async (req, res) => {
+    const id = req.params.id 
+    try {
+        const job = await Job.findById(id)
+        res.json(job)
+    } catch(err) {
+        console.log(err) 
+        res.status(500).json({ error: 'something went wrong'})
+    }
+}  
+
 jobsCltr.create = async (req, res) => {
     const errors = validationResult(req) 
     if(!errors.isEmpty()) {
