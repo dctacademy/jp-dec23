@@ -19,11 +19,22 @@ applicationsCltr.apply = async (req, res) => {
         console.log(err) 
         res.status(500).json({error: 'something went wrong'})
     }
-    
-
-
-
 }
+
+applicationsCltr.check = async (req, res) => {
+    const jobId = req.params.jobId 
+    try { 
+        const application = await Application.findOne({ job: jobId, candidate: req.user.id })
+        if(!application) {
+            return res.json({})
+        }
+        res.json(application)
+    } catch(err) {
+        console.log(err) 
+        res.json(err) 
+    }
+}
+
 
 
 module.exports = applicationsCltr

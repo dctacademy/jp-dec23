@@ -47,6 +47,8 @@ app.put('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']
 
 app.post('/api/applications', authenticateUser, authorizeUser(['candidate']), checkSchema(applicationValidationSchema), applicationsCltr.apply)
 
+app.get('/api/applications/check/:jobId', authenticateUser, authorizeUser(['candidate','recruiter']), applicationsCltr.check)
+
 
 app.listen(port, () => {
     console.log('server running on port', port)
