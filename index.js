@@ -6,10 +6,12 @@ const configureDB = require('./config/db')
 const userRegisterValidationSchema = require('./app/validations/user-register-validations')
 const userLoginValidationSchema = require('./app/validations/user-login-validation')
 const {candidateValidationSchema, candidateEditValidationSchema} = require('./app/validations/candidate-validation')
+const { applicationValidationSchema } = require('./app/validations/application-validation')
 const jobValidationSchema = require('./app/validations/job-validation')
 const usersCltr = require('./app/controllers/users-cltr')
 const jobsCltr = require('./app/controllers/jobs-cltr') 
 const candidatesCltr = require('./app/controllers/candidates-cltr')
+const applicationsCltr = require('./app/controllers/applications-cltr')
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
 const app = express() 
@@ -41,6 +43,9 @@ app.put('/api/jobs/:id', authenticateUser, authorizeUser(['recruiter']), checkSc
 app.post('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']), checkSchema(candidateValidationSchema), candidatesCltr.create)
 app.get('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']), candidatesCltr.show)
 app.put('/api/candidates/profile', authenticateUser, authorizeUser(['candidate']), checkSchema(candidateEditValidationSchema), candidatesCltr.update)
+
+app.post('/api/applications', authenticateUser, authorizeUser(['candidate']), checkSchema(applicationValidationSchema), applicationsCltr.apply)
+
 
 app.listen(port, () => {
     console.log('server running on port', port)
