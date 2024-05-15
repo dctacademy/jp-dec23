@@ -27,7 +27,23 @@ const applicationTrackSchema = {
 
 }
 
+const applicationJobId = {
+    jobId: {
+        in: ['query'],
+        exists: {
+            errorMessage: 'jobId query required'
+        },
+        notEmpty: {
+            errorMessage: 'jobId cannot be empty'
+        },
+        isMongoId: {
+            errorMessage: 'jobId should be a valid mongo id'
+        }
+    }
+}
+
 module.exports = {
     applicationValidationSchema,
-    applicationTrackSchema
+    applicationTrackSchema,
+    applicationJobId
 }

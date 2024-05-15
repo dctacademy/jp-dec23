@@ -1,6 +1,8 @@
 const Job = require('../models/job-model')
+const Application = require('../models/application-model')
 const { validationResult } = require('express-validator')
 const jobsCltr = {}
+
 jobsCltr.list = async (req, res) => {
     try { 
         const jobs = await Job.find() 
@@ -63,6 +65,39 @@ jobsCltr.remove = async (req, res) => {
         return res.status(404).json({ error: 'record not found'})
     }
     res.json(job) 
+}
+
+jobsCltr.applications = async (req, res) => {
+    const id = req.params.id 
+    const job = await Job.findOne({ _id: id, recruiter : req.user.id })
+    if(!job){
+        return res.status(404).json({ error: 'record not found'})
+    }
+    const applications = await Application.find({ job: job._id })
+    res.json(applications)
+}
+
+jobsCltr.singleApplication = async (req, res) =>  {
+    const id = req.params.id 
+    const appId = req.params.appId 
+    const job = await Job.findOne({ _id: id, recruiter: req.user.id })
+    if(!job) {
+        return res.status(404).json({ error: 'record not found'})
+    }
+    const application = await Application.findOne({ _id: appId, job: job._id })
+    res.json(application) 
+}
+
+jobsCltr.applicationUpdate = async (req, res) => {
+    const id = req.params.id 
+    const appId = req.params.appId 
+    const body = req.body 
+    const job = await Job.findOne({ _id: id, recruiter: req.user.id })
+    if(!job) {
+        return res.status(404).json({ error: 'record not found'})
+    } 
+    const application = await Application.findOneAndUpdate({ _id: appId, job: id}, body, { new: true })
+    res.json(application) 
 }
 
 module.exports = jobsCltr 
